@@ -9,15 +9,14 @@ from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 from peft import LoraConfig
 
 import torch
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from transformers import TextStreamer
+# from transformers import TextStreamer
 import numpy as np
 
 import pandas as pd
 
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -29,7 +28,15 @@ from transformers import TrainingArguments
 from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 from peft import LoraConfig
 import argparse
+import time
+import random
 
+def set_seed(seed_value=42):
+    """Set seed for reproducibility."""
+    np.random.seed(seed_value)
+    torch.manual_seed(seed_value)
+    torch.cuda.manual_seed_all(seed_value)  # if you are using CUDA
+    random.seed(seed_value)
 
 def main(model_save_path, lr):
     # model_name = "google/gemma-7b-it"
@@ -152,4 +159,5 @@ if __name__ == "__main__":
     # lr = 1e-4
     # exp_name = 'phi2/exp_1_lr_5e-4'
 
+    set_seed(42)
     main(args.save_path, args.lr)

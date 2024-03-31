@@ -1,0 +1,1 @@
+pip install transformers trl peft pandas scikit-learn datasets
